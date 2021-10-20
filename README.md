@@ -1,2 +1,24 @@
-# fed-y3-ca1-VueCountries
-Repo for an assignment of the Frontend Development module in the course I'm attending at IADT.
+# ca1-example
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
