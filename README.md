@@ -1,4 +1,5 @@
-# ca1-example
+# fed-y3-ca1-VueCountries
+Repo for CA1 of Frontend Development in IADT, third year.
 
 ## Project setup
 ```
