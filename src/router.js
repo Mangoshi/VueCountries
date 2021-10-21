@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/pages/Home'
-import AllCountries from '@/pages/AllCountries'
-import SingleCountry from '@/pages/SingleCountry'
+import Homepage from '@/pages/Homepage'
+import Browser from '@/pages/Browser'
+import Viewer from '@/pages/Viewer'
 
 Vue.use(Router)
 
@@ -12,19 +12,19 @@ export default new Router ({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home
+            name: 'homepage',
+            component: Homepage
         },
 
         {
-            path: '/countries/all',
+            path: '/countries/browser',
             name: 'all_countries',
-            component: AllCountries
+            component: Browser
         },
         {
             path: '/countries/:country',
             name: 'single_country',
-            component: SingleCountry
+            component: Viewer
         },
     ]
 })

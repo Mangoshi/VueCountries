@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CountryViewer 
+        <Country 
             v-for="country in countries"
             :key="country.ccn3"
             :country="country" />
@@ -9,18 +9,16 @@
 
 <script>
     import axios from 'axios'
-    import CountryViewer from '@/components/CountryViewer'
+    import Country from '@/components/Country'
 
     export default {
-        name: 'AllCountries',
+        name: 'Browser',
         components: {
-            CountryViewer
+            Country
         },
         data() {
             return {
-                countries: [
-
-                ]
+                countries: []
             }
         },
         mounted() {

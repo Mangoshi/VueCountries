@@ -1,6 +1,7 @@
 <template>
     <div>
         {{ $route.params.country }}
+        
     </div>
 </template>
 
@@ -8,7 +9,7 @@
     import axios from 'axios'
 
     export default {
-        name: 'SingleCountry',
+        name: 'Viewer',
         data() {
             return {
                 country: []

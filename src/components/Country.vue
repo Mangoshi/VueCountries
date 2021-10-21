@@ -13,7 +13,7 @@
 
 <script>
     export default {
-        name: 'CountryViewer',
+        name: 'Country',
         props: {
             country: Object
         }
