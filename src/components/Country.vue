@@ -23,7 +23,7 @@
                         <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                         <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                         <b-list-group-item class="c_timezone"><b>Timezone: </b>{{ country.timezones[0] }}</b-list-group-item>
-                        <b-list-group-item class="c_population"><b>Population: </b>{{ country.population }}</b-list-group-item>
+                        <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
                     </b-list-group>
                 </b-card-body>
                 <template #footer>
@@ -39,6 +39,11 @@
         name: 'Country',
         props: {
             country: Object
+        },
+        methods: {
+            popFormat(){
+                return this.country.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            }
         }
     }
 </script>
