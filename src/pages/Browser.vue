@@ -1,9 +1,13 @@
 <template>
     <div>
-        <Country 
-            v-for="country in countries"
-            :key="country.ccn3"
-            :country="country" />
+        <b-container fluid>
+            <b-row cols-sm="2" cols-md="3" cols-lg="4">
+                <Country 
+                    v-for="country in countries"
+                    :key="country.ccn3"
+                    :country="country" />
+            </b-row>
+        </b-container>
     </div>
 </template>
 
