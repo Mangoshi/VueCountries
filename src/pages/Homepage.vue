@@ -10,6 +10,7 @@
 
 <script>
     import axios from 'axios'
+    import router from '@/router'
 
     export default {
         name: 'Homepage',
@@ -23,6 +24,8 @@
                 if(!this.text) {
                     alert("Please enter a search term!")
                     return
+                } else {
+                    router.push("/countries/"+this.text)
                 }
                 axios
                     .get(`https://restcountries.com/v3.1/name/${this.text}`)
