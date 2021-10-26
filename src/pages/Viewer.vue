@@ -82,7 +82,7 @@
                 var currencyStringified = JSON.stringify(obj)
                 var secondCurrency = currencyStringified.split('"')[11]
                 var pluralSingular
-                
+
                 if(secondCurrency){
                     pluralSingular = "Currencies: "
                 } else {

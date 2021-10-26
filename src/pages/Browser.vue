@@ -5,7 +5,8 @@
                 <Country 
                     v-for="country in countries"
                     :key="country.ccn3"
-                    :country="country" />
+                    :country="country" 
+                />
             </b-row>
         </b-container>
     </div>
