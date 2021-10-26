@@ -25,7 +25,7 @@
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                             <b-list-group-item class="c_timezone"><b>Timezone: </b>{{ country.timezones[0] }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
-                            <b-list-group-item class="c_currency"><b>Currencies: </b>{{ currencyKey(country.currencies) }}</b-list-group-item>
+                            <b-list-group-item class="c_currency"><b>{{ pluralCheck(country.currencies) }}</b>{{ currencyKey(country.currencies) }}</b-list-group-item>
                         </b-list-group>
                     </b-card-body>
                     <template #footer>
@@ -83,9 +83,9 @@
                 var secondCurrency = currencyStringified.split('"')[11]
                 var pluralSingular
                 if(secondCurrency){
-                    pluralSingular = "Currencies:"
+                    pluralSingular = "Currencies: "
                 } else {
-                    pluralSingular = "Currency:"
+                    pluralSingular = "Currency: "
                 }
                 return pluralSingular
             }
