@@ -1,5 +1,8 @@
 <template>
     <b-container fluid>
+        <b-row>
+            <img :src="photo" >
+        </b-row>
         <b-row cols="2" class="m-2">
             <b-col cols="4">
                 <b-card 
@@ -23,13 +26,14 @@
                             <b-list-group-item class="c_capital" variant="warning" :href="'https://www.google.com/maps/place/'+country.capital"><b>Capital: </b>{{ country.capital[0] }}</b-list-group-item>
                             <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
-                            <b-list-group-item class="c_timezone"><b>Timezone: </b>{{ country.timezones[0] }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
                             <b-list-group-item class="c_currency"><b>{{ pluralCheck(country.currencies) }}</b>{{ currencyKey(country.currencies) }}</b-list-group-item>
                         </b-list-group>
                     </b-card-body>
                     <template #footer>
-                        
+                        <b-row cols="2">
+                            <b-col class="c_timezone">&#8986; {{ country.timezones[0] }}</b-col>
+                        </b-row>
                     </template>
                 </b-card>
             </b-col>
@@ -51,16 +55,27 @@
         name: 'Viewer',
         data() {
             return {
-                country: []
+                country: [],
+                photo: [],
             }
         },
         mounted(){
             axios
                 .get(`https://restcountries.com/v3.1/name/${this.$route.params.country}?fullText=true`)
                 .then(response => {
-                    console.log(response.data)
+                    console.log("Countries data: ", response.data)
                     this.country = response.data[0]})
-                .catch(error => console.log(error))
+                .catch(error => console.log("RESTcountries error: ", error))
+                
+            const PEXELS_URL = `https://api.pexels.com/v1/search?query=${this.$route.params.country}&per_page=1&orientation=landscape`
+            const PEXELS_TOKEN = '563492ad6f91700001000001660dc6de6e62494da4a3601ccfc6ecc3'
+
+            axios
+                .get(PEXELS_URL, { headers: {"Authorization" : `Bearer ${PEXELS_TOKEN}`} })
+                .then(pexels => {
+                    console.log("Pexels data: ", pexels)
+                    this.photo = pexels.data.photos[0].src.large})
+                .catch(error => console.log("Pexels error: ", error))
         },
         methods: {
             popFormat(){

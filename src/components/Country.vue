@@ -22,12 +22,14 @@
                         <b-list-group-item class="c_capital" variant="warning" :href="'https://www.google.com/maps/place/'+country.capital"><b>Capital: </b>{{ country.capital[0] }}</b-list-group-item>
                         <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                         <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
-                        <b-list-group-item class="c_timezone"><b>Timezone: </b>{{ country.timezones[0] }}</b-list-group-item>
                         <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
                     </b-list-group>
                 </b-card-body>
                 <template #footer>
-                    
+                    <b-row cols="2">
+                        <b-col class="c_timezone">&#8986; {{ country.timezones[0] }}</b-col>
+                        <b-col class="c_currency">&#128176; {{ currencyKey(country.currencies) }}</b-col>
+                    </b-row>
                 </template>
             </b-card>
         </b-col>
@@ -43,6 +45,18 @@
         methods: {
             popFormat(){
                 return this.country.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
+            currencyKey(obj){
+                var currencyStringified = JSON.stringify(obj)
+                var secondCurrency = currencyStringified.split('"')[11]
+                var currencyReturned
+
+                if(secondCurrency){
+                    currencyReturned = currencyStringified.split('"')[1] + ", " + currencyStringified.split('"')[11]
+                } else {
+                    currencyReturned = currencyStringified.split('"')[1]
+                }
+                return currencyReturned
             }
         }
     }
