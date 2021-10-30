@@ -10,11 +10,11 @@
                 <template #header>
                     <!-- If there is a flag emoji available -->
                     <h5 class="mb-0" v-if="country.flag">
-                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common}}">{{country.flag + " " + country.name.common }}</router-link>
+                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common, borders: country.borders}}">{{country.flag + " " + country.name.common }}</router-link>
                     </h5>
                     <!-- If there is not a flag emoji available -->
                     <h5 class="mb-0" v-else>
-                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common}}">&#127937; {{country.name.common }}</router-link>
+                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common, borders: country.borders}}">&#127937; {{country.name.common }}</router-link>
                     </h5>
                 </template>
                 <b-card-body class="p-0">

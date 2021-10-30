@@ -7,6 +7,9 @@
                     header-tag="header" 
                     footer-tag="footer"
                     no-body
+                    :img-src='photo'
+                    img-alt="Image"
+                    img-top
                 >
                     <template #header>
                         <!-- If there is a flag emoji available -->
@@ -27,7 +30,7 @@
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
                             <b-list-group-item class="c_currency"><b>{{ pluralCheck(country.currencies) }}</b>{{ currencyKey(country.currencies) }}</b-list-group-item>
-                            <b-list-group-item class="c_bordering"><b>Bordering Countries: </b>{{ borderingNames() + bordering }}</b-list-group-item>
+                            <b-list-group-item class="c_bordering"><b>Borders: </b>{{ bordering.toString() }}</b-list-group-item>
                         </b-list-group>
                     </b-card-body>
                     <template #footer>
@@ -44,9 +47,6 @@
                     </div>
                 </b-card>
             </b-col>
-        </b-row>
-        <b-row>
-            <img :src="photo" >
         </b-row>
     </b-container>
 </template>
@@ -79,8 +79,23 @@
                 .get(PEXELS_URL, { headers: {"Authorization" : `Bearer ${PEXELS_TOKEN}`} })
                 .then(pexels => {
                     console.log("Pexels data: ", pexels)
-                    this.photo = pexels.data.photos[0].src.large})
+                    this.photo = pexels.data.photos[0].src.medium})
                 .catch(error => console.log("Pexels error: ", error))
+
+            var countryBorders = this.$route.params.borders
+            axios
+                .get(`https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`)
+                .then(response => {
+                    console.log("Borders data: ", response.data)
+                    var bordersArray = response.data
+                    var borderNames = []
+                    bordersArray.forEach(border => {
+                        borderNames.push(" " + border.name.common)
+                    })
+                    console.log("Bordering country names: ", borderNames)
+                    this.bordering = borderNames
+                    })
+                .catch(error => console.log("RESTcountries (country code endpoint) error: ", error))
         },
         methods: {
             popFormat(){
@@ -109,23 +124,6 @@
                     pluralSingular = "Currency: "
                 }
                 return pluralSingular
-            },
-            borderingNames(){
-                var countryBorders = this.country.borders
-                axios
-                .get(`https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`)
-                .then(response => {
-                    console.log("Borders data: ", response.data)
-                    var bordersArray = response.data
-                    var borderNames = []
-                    bordersArray.forEach(border => {
-                        borderNames.push(border.name.common)
-                    })
-                    console.log("Bordering country names: ", borderNames)
-                    this.bordering = borderNames
-                    })
-                .catch(error => console.log("RESTcountries (country code endpoint) error: ", error))
-                
             }
         }
     }
