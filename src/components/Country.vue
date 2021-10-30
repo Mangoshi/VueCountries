@@ -10,11 +10,11 @@
                 <template #header>
                     <!-- If there is a flag emoji available -->
                     <h5 class="mb-0" v-if="country.flag">
-                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.official}}">{{country.flag + " " + country.name.common }}</router-link>
+                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common}}">{{country.flag + " " + country.name.common }}</router-link>
                     </h5>
                     <!-- If there is not a flag emoji available -->
                     <h5 class="mb-0" v-else>
-                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.official}}">&#127937; {{country.name.common }}</router-link>
+                        <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common}}">&#127937; {{country.name.common }}</router-link>
                     </h5>
                 </template>
                 <b-card-body class="p-0">
@@ -22,7 +22,6 @@
                         <b-list-group-item class="c_capital" variant="warning" :href="'https://www.google.com/maps/place/'+country.capital"><b>Capital: </b>{{ country.capital[0] }}</b-list-group-item>
                         <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                         <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
-                        <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
                     </b-list-group>
                 </b-card-body>
                 <template #footer>

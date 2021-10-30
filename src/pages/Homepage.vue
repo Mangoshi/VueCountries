@@ -1,12 +1,12 @@
 <template>
-    <div class="bod">
-        <div class="centered">
-            <h1 v-if="text">{{ text }}</h1>
-            <h1 v-else>Fruity Countries</h1>
+    <div class="bod bg">
+        <div class="centered shadowBox">
+            <h1 class="rainbow rainbow_text_animated" v-if="text">{{ text }}</h1>
+            <h1 class="rainbow rainbow_text_animated" v-else>Fruity Countries</h1>
             <b-form-input v-model="text" v-on:keyup.enter="searchCountry()" placeholder="Please enter the name of a country"></b-form-input>
         </div>
-        <b-container fluid>
-            <b-row cols-sm="2" cols-md="3" cols-lg="4">
+        <b-container fluid class="bg">
+            <b-row cols-sm="1" cols-md="2" cols-lg="3" cols-xl="4">
                 <Country 
                     v-for="country in countries"
                     :key="country.ccn3"
@@ -29,8 +29,20 @@
         data() {
             return {
                 text: '',
-                countries: []
+                countries: [],
+                photo: []
             }
+        },
+        mounted(){
+            const PEXELS_URL = `https://api.pexels.com/v1/search?query=earth&per_page=1&orientation=landscape`
+            const PEXELS_TOKEN = '563492ad6f91700001000001660dc6de6e62494da4a3601ccfc6ecc3'
+
+            axios
+                .get(PEXELS_URL, { headers: {"Authorization" : `Bearer ${PEXELS_TOKEN}`} })
+                .then(pexels => {
+                    console.log("Pexels data: ", pexels)
+                    this.photo = pexels.data.photos[0].src.large})
+                .catch(error => console.log("Pexels error: ", error))
         },
         methods: {
             async searchCountry() {
@@ -84,7 +96,8 @@
     }
     h1{
         font-family: "Permanent Marker";
-        margin-bottom: 1em;
+        margin-bottom: 0.5em;
+        animation: slow-rotate 4s infinite;
     }
     .bod{
         height: 75vh;
@@ -93,4 +106,17 @@
     .centered{
         margin: auto;
     }
+
+	@keyframes slow-rotate {
+        0%{
+            transform: rotate(2deg);
+        }
+        50%{
+            transform: rotate(-2deg);
+        }
+        100%{
+            transform: rotate(2deg);
+        }
+    }
+
 </style>

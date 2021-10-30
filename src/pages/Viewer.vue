@@ -1,8 +1,5 @@
 <template>
     <b-container fluid>
-        <b-row>
-            <img :src="photo" >
-        </b-row>
         <b-row cols="2" class="m-2">
             <b-col cols="4">
                 <b-card 
@@ -14,11 +11,13 @@
                     <template #header>
                         <!-- If there is a flag emoji available -->
                         <h5 class="mb-0" v-if="country.flag">
-                            <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.official}}">{{country.flag + " " + country.name.common + " / " + country.altSpellings[1] }}</router-link>
+                            {{ country.flag + " " + country.name.common}} 
+                            <span v-if="country.altSpellings[1]">{{" / " + country.altSpellings[1]}}</span>
+                            <span v-else></span>
                         </h5>
                         <!-- If there is not a flag emoji available -->
                         <h5 class="mb-0" v-else>
-                            <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.official}}">&#127937; {{country.name.common }}</router-link>
+                            &#127937; {{ country.name.common + " / " + country.altSpellings[1] }}
                         </h5>
                     </template>
                     <b-card-body class="p-0">
@@ -28,6 +27,7 @@
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
                             <b-list-group-item class="c_currency"><b>{{ pluralCheck(country.currencies) }}</b>{{ currencyKey(country.currencies) }}</b-list-group-item>
+                            <b-list-group-item class="c_bordering"><b>Bordering Countries: </b>{{ borderingNames() + bordering }}</b-list-group-item>
                         </b-list-group>
                     </b-card-body>
                     <template #footer>
@@ -45,6 +45,9 @@
                 </b-card>
             </b-col>
         </b-row>
+        <b-row>
+            <img :src="photo" >
+        </b-row>
     </b-container>
 </template>
 
@@ -57,14 +60,16 @@
             return {
                 country: [],
                 photo: [],
+                bordering: []
             }
         },
         mounted(){
             axios
                 .get(`https://restcountries.com/v3.1/name/${this.$route.params.country}?fullText=true`)
                 .then(response => {
-                    console.log("Countries data: ", response.data)
-                    this.country = response.data[0]})
+                    console.log("Countries data: ", response.data[0])
+                    this.country = response.data[0]
+                    })
                 .catch(error => console.log("RESTcountries error: ", error))
                 
             const PEXELS_URL = `https://api.pexels.com/v1/search?query=${this.$route.params.country}&per_page=1&orientation=landscape`
@@ -104,6 +109,23 @@
                     pluralSingular = "Currency: "
                 }
                 return pluralSingular
+            },
+            borderingNames(){
+                var countryBorders = this.country.borders
+                axios
+                .get(`https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`)
+                .then(response => {
+                    console.log("Borders data: ", response.data)
+                    var bordersArray = response.data
+                    var borderNames = []
+                    bordersArray.forEach(border => {
+                        borderNames.push(border.name.common)
+                    })
+                    console.log("Bordering country names: ", borderNames)
+                    this.bordering = borderNames
+                    })
+                .catch(error => console.log("RESTcountries (country code endpoint) error: ", error))
+                
             }
         }
     }

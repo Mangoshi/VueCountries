@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-container fluid>
-            <b-row cols-sm="2" cols-md="3" cols-lg="4">
+            <b-row cols-sm="1" cols-md="2" cols-lg="3" cols-xl="4">
                 <Country 
                     v-for="country in countries"
                     :key="country.ccn3"
