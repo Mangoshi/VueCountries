@@ -31,7 +31,7 @@
                             <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
-                            <b-list-group-item class="c_bordering"><b>Borders: </b>{{ bordering.toString() }}</b-list-group-item>
+                            <b-list-group-item class="c_bordering" v-if="bordering.length !== 0"><b>Borders: </b>{{ bordering.toString() }}</b-list-group-item>
                         </b-list-group>
                     </b-card-body>
                     <template #footer>
@@ -66,14 +66,19 @@
             }
         },
         mounted(){
+
+            // RESTCountries Request (partial name endpoint) //
+            const COUNTRIES_NAME_URL = `https://restcountries.com/v3.1/name/${this.$route.params.country}?fullText=true`
+
             axios
-                .get(`https://restcountries.com/v3.1/name/${this.$route.params.country}?fullText=true`)
-                .then(response => {
-                    console.log("Countries data: ", response.data[0])
-                    this.country = response.data[0]
+                .get(COUNTRIES_NAME_URL)
+                .then(country => {
+                    console.log("Countries data: ", country.data[0])
+                    this.country = country.data[0]
                     })
                 .catch(error => console.log("RESTcountries error: ", error))
-                
+
+            // Pexels Request //
             const PEXELS_URL = `https://api.pexels.com/v1/search?query=${this.$route.params.country}&per_page=1&orientation=landscape`
             const PEXELS_TOKEN = '563492ad6f91700001000001660dc6de6e62494da4a3601ccfc6ecc3'
 
@@ -84,9 +89,12 @@
                     this.photo = pexels.data.photos[0].src.medium})
                 .catch(error => console.log("Pexels error: ", error))
 
-            var countryBorders = this.$route.params.borders
+            // RESTCountries Request (country code endpoint) //
+            const COUNTRIES_CODE_URL = `https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`
+            var countryBorders = this.country.params.borders
+
             axios
-                .get(`https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`)
+                .get(COUNTRIES_CODE_URL)
                 .then(response => {
                     console.log("Borders data: ", response.data)
                     var bordersArray = response.data
@@ -98,6 +106,7 @@
                     this.bordering = borderNames
                     })
                 .catch(error => console.log("RESTcountries (country code endpoint) error: ", error))
+                
         },
         methods: {
             popFormat(){
