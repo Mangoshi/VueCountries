@@ -1,5 +1,11 @@
-# fed-y3-ca1-VueCountries
-Repo for CA1 of Frontend Development in IADT, third year.
+# FruityCountries (fed-y3-ca1)
+Repo for CA1 of Frontend Development in IADT (Creative Computing, third year)
+
+### Hosted on Firebase
+
+https://fruitycountries.web.app/
+
+
 
 ## Project setup
 ```
