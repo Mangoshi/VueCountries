@@ -20,7 +20,9 @@
                         </h5>
                         <!-- If there is not a flag emoji available -->
                         <h5 class="mb-0" v-else>
-                            &#127937; {{ country.name.common + " / " + country.altSpellings[1] }}
+                            &#127937; {{ country.name.common }}
+                            <span v-if="country.altSpellings[1]">{{" / " + country.altSpellings[1]}}</span>
+                            <span v-else></span>
                         </h5>
                     </template>
                     <b-card-body class="p-0">

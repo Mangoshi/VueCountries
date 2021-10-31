@@ -3,7 +3,13 @@
         <div class="centered shadowBox">
             <h1 class="rainbow rainbow_text_animated" v-if="text">{{ text }}</h1>
             <h1 class="rainbow rainbow_text_animated" v-else>Fruity Countries</h1>
-            <b-form-input v-model="text" v-on:keyup.enter="searchCountry()" placeholder="Please enter the name of a country"></b-form-input>
+            <b-row class="searchbox">
+                <b-form-input v-model="text" v-on:keyup.enter="searchCountry()" placeholder="Please enter the name of a country"></b-form-input>
+            </b-row>
+            <b-row cols="2">
+                <b-button variant="outline-primary" @click="searchCountry()">Search</b-button>
+                <b-button variant="outline-danger" @click="feelingLucky()">I'm feeling lucky</b-button>
+            </b-row>
             <small>You can also type the name of a region, subregion, or currency!</small>
         </div>
         <b-container fluid class="bg">
@@ -60,10 +66,12 @@
                 Promise.allSettled([firstRequest,secondRequest,thirdRequest])
                 // Using axios.spread to "spread" the requests out into an array
                 .then(axios.spread((...responses) => {
-                    // Defining responses as constants
-                    const firstResponse = responses[0]
+                    // Defining responses as constants..
+                    // Ordering responses from least to most broad so that "EUR" will definitely return the currency,
+                    // rather than "Europe", for example.
+                    const thirdResponse = responses[0]
                     const secondResponse = responses[1]
-                    const thirdResponse = responses[2]
+                    const firstResponse = responses[2]
                     // Logging each response
                     console.log("First Response: ",firstResponse)
                     console.log("Second Response: ",secondResponse)
@@ -86,6 +94,27 @@
                 .catch(errors => {
                     console.log('Errors detected: ', errors)
                 })
+            },
+            feelingLucky(){
+                if(!this.text) {
+                    alert("Please enter a search term!")
+                    return
+                }
+                axios
+                    .get(`https://restcountries.com/v3.1/name/${this.text}`)
+                    .then((response) => {
+                        console.log("Feeling lucky response: ", response.data)
+                        // If the length of the returned array is 1
+                        if(response.data.length==1){
+                            // Push the name of the country in the response to the URL
+                            this.$router.push("/countries/"+this.text)
+                        } else {
+                            // Otherwise, alert user and clear the search box
+                            alert("No result / multiple results found!")
+                            this.text = ""
+                        }
+                    })
+                    .catch(error => console.log(error))
             }
         }
     }
@@ -96,9 +125,13 @@
         text-align: center;
     }
     h1{
+        font-size: 3em;
         font-family: "Permanent Marker";
         margin-bottom: 0.5em;
         animation: slow-rotate 4s infinite;
+    }
+    small{
+        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     }
     .bod{
         height: 75vh;
@@ -106,6 +139,9 @@
     }
     .centered{
         margin: auto;
+    }
+    .searchbox{
+        margin-bottom: 0.5em;
     }
 
 	@keyframes slow-rotate {
