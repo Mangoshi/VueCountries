@@ -90,8 +90,8 @@
                 .catch(error => console.log("Pexels error: ", error))
 
             // RESTCountries Request (country code endpoint) //
+            var countryBorders = this.$route.params.borders
             const COUNTRIES_CODE_URL = `https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`
-            var countryBorders = this.country.params.borders
 
             axios
                 .get(COUNTRIES_CODE_URL)
