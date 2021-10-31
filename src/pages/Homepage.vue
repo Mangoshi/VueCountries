@@ -4,6 +4,7 @@
             <h1 class="rainbow rainbow_text_animated" v-if="text">{{ text }}</h1>
             <h1 class="rainbow rainbow_text_animated" v-else>Fruity Countries</h1>
             <b-form-input v-model="text" v-on:keyup.enter="searchCountry()" placeholder="Please enter the name of a country"></b-form-input>
+            <small>You can also type the name of a region, subregion, or currency!</small>
         </div>
         <b-container fluid class="bg">
             <b-row cols-sm="1" cols-md="2" cols-lg="3" cols-xl="4">

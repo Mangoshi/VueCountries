@@ -29,13 +29,13 @@
                             <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
-                            <b-list-group-item class="c_currency"><b>{{ pluralCheck(country.currencies) }}</b>{{ currencyKey(country.currencies) }}</b-list-group-item>
                             <b-list-group-item class="c_bordering"><b>Borders: </b>{{ bordering.toString() }}</b-list-group-item>
                         </b-list-group>
                     </b-card-body>
                     <template #footer>
                         <b-row cols="2">
                             <b-col class="c_timezone">&#8986; {{ country.timezones[0] }}</b-col>
+                            <b-col class="c_currency">&#128176; {{ currencyKey(country.currencies) }}</b-col>
                         </b-row>
                     </template>
                 </b-card>
@@ -112,18 +112,6 @@
                     currencyReturned = currencyStringified.split('"')[1]
                 }
                 return currencyReturned
-            },
-            pluralCheck(obj){
-                var currencyStringified = JSON.stringify(obj)
-                var secondCurrency = currencyStringified.split('"')[11]
-                var pluralSingular
-
-                if(secondCurrency){
-                    pluralSingular = "Currencies: "
-                } else {
-                    pluralSingular = "Currency: "
-                }
-                return pluralSingular
             }
         }
     }
