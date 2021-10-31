@@ -1,7 +1,7 @@
 <template>
     <b-container fluid>
-        <b-row cols="2" class="m-2">
-            <b-col cols="4">
+        <b-row class="m-2">
+            <b-col sm="12" md="4" xl="3">
                 <b-card 
                     class="country" 
                     header-tag="header" 
@@ -42,7 +42,7 @@
                     </template>
                 </b-card>
             </b-col>
-            <b-col cols="8">
+            <b-col sm="12" md="8" xl="9">
                 <b-card>
                     <div class="iframe-rwd">
                         <iframe scrolling="no" allowfullscreen="yes" loading="lazy" :src="`https://www.google.com/maps/embed/v1/place?key=AIzaSyAfD6KkQQ2eE5q5gt7lTqZBEhRZuh1FOUQ&q=${country.name.common}`"></iframe>
