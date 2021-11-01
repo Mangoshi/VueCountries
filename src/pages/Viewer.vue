@@ -27,7 +27,7 @@
                     </template>
                     <b-card-body class="p-0">
                         <b-list-group flush>
-                            <b-list-group-item class="c_capital" variant="warning" :href="'https://www.google.com/maps/place/'+country.capital"><b>Capital: </b>{{ country.capital[0] }}</b-list-group-item>
+                            <b-list-group-item class="c_capital" variant="warning" :href="'https://www.google.com/maps/place/'+country.capital" target="_blank"><b>Capital: </b>{{ country.capital[0] }}</b-list-group-item>
                             <b-list-group-item class="c_region"><b>Region: </b>{{ country.region }}</b-list-group-item>
                             <b-list-group-item class="c_subregion"><b>Subregion: </b>{{ country.subregion }}</b-list-group-item>
                             <b-list-group-item class="c_population"><b>Population: </b>{{ popFormat() }}</b-list-group-item>
@@ -75,6 +75,23 @@
                 .then(country => {
                     console.log("Countries data: ", country.data[0])
                     this.country = country.data[0]
+
+                    // RESTCountries Borders Request (country code endpoint) //
+                    let countryBorders = this.country.borders
+                    const COUNTRIES_CODE_URL = `https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`
+                    axios
+                        .get(COUNTRIES_CODE_URL)
+                        .then(response => {
+                            console.log("Borders data: ", response.data)
+                            let bordersArray = response.data
+                            let borderNames = []
+                            bordersArray.forEach(border => {
+                                borderNames.push(" " + border.name.common)
+                            })
+                            console.log("Bordering country names: ", borderNames)
+                            this.bordering = borderNames
+                            })
+                        .catch(error => console.log("RESTcountries (country code endpoint) error: ", error))
                     })
                 .catch(error => console.log("RESTcountries error: ", error))
 
@@ -88,24 +105,6 @@
                     console.log("Pexels data: ", pexels)
                     this.photo = pexels.data.photos[0].src.medium})
                 .catch(error => console.log("Pexels error: ", error))
-
-            // RESTCountries Request (country code endpoint) //
-            var countryBorders = this.$route.params.borders
-            const COUNTRIES_CODE_URL = `https://restcountries.com/v3.1/alpha?codes=${countryBorders.toString()}`
-
-            axios
-                .get(COUNTRIES_CODE_URL)
-                .then(response => {
-                    console.log("Borders data: ", response.data)
-                    var bordersArray = response.data
-                    var borderNames = []
-                    bordersArray.forEach(border => {
-                        borderNames.push(" " + border.name.common)
-                    })
-                    console.log("Bordering country names: ", borderNames)
-                    this.bordering = borderNames
-                    })
-                .catch(error => console.log("RESTcountries (country code endpoint) error: ", error))
                 
         },
         methods: {

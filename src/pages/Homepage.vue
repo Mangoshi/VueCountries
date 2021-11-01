@@ -57,7 +57,7 @@
                     // Defining responses as constants..
                     // Ordering responses from least to most broad so that "EUR" will definitely return the currency,
                     // rather than "Europe", for example.
-                    const thirdResponse = responses[0]
+                    const thirdResponse= responses[0]
                     const secondResponse = responses[1]
                     const firstResponse = responses[2]
                     // Logging each response
@@ -93,7 +93,7 @@
                     .then((response) => {
                         console.log("Feeling lucky response: ", response.data)
                         // If the length of the returned array is 1
-                        if(response.data.length==1){
+                        if(response.data.length===1){
                             // Push the name of the country in the response to the URL
                             this.$router.push("/countries/"+this.text)
                         } else {
@@ -115,9 +115,9 @@
     }
 
     h1{
-        font-size: 3em;
+        font-size: 3rem;
         font-family: "Permanent Marker";
-        margin-bottom: 0.5em;
+        margin: 0.2rem 0 0.7em 0;
         animation: slow-rotate 4s infinite;
     }
 

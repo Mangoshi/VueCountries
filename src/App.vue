@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style>
+
 	/* ~~ START OF CSS RESET ~~ */
 
 	Box sizing rules *,
@@ -98,7 +99,7 @@ export default {
 
 	/* ~~ END OF CSS RESET ~~ */
 
-	/* ~~ TRANSITIONS STYLING ~~ */
+	/* ~~ VUE TRANSITIONS STYLING ~~ */
 
     .slide-enter-active{
 		-webkit-animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
