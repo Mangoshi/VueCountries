@@ -13,13 +13,13 @@
                 >
                     <template #header>
                         <!-- If there is a flag emoji available -->
-                        <h5 class="mb-0" v-if="country.flag">
+                        <h5 class="mb-0 centeredText" v-if="country.flag">
                             {{ country.flag + " " + country.name.common}} 
                             <span v-if="country.altSpellings[1]">{{" / " + country.altSpellings[1]}}</span>
                             <span v-else></span>
                         </h5>
                         <!-- If there is not a flag emoji available -->
-                        <h5 class="mb-0" v-else>
+                        <h5 class="mb-0 centeredText" v-else>
                             &#127937; {{ country.name.common }}
                             <span v-if="country.altSpellings[1]">{{" / " + country.altSpellings[1]}}</span>
                             <span v-else></span>
@@ -141,5 +141,8 @@
         left: 0;
         width: 100%;
         height: 100%;
+    }
+    .centeredText{
+        text-align: center;
     }
 </style>

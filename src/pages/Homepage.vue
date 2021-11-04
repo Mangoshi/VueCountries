@@ -1,10 +1,10 @@
 <template>
     <div class="bod">
         <div class="centered">
-            <h1 v-if="text">{{ text }}</h1>
-            <h1 v-else>Fruity Countries</h1>
+            <h1 class="centeredText" v-if="text">{{ text }}</h1>
+            <h1 class="centeredText" v-else>Fruity Countries</h1>
             <b-row class="searchbox">
-                <b-form-input v-model="text" v-on:keyup.enter="searchCountry()" placeholder="Please enter the name of a country"></b-form-input>
+                <b-form-input class="centeredText" v-model="text" v-on:keyup.enter="searchCountry()" placeholder="Please enter the name of a country"></b-form-input>
             </b-row>
             <b-row cols="2">
                 <b-button variant="outline-primary" @click="searchCountry()">Search</b-button>
@@ -110,10 +110,6 @@
 
 <style scoped>
 
-    *{
-        text-align: center;
-    }
-
     h1{
         font-size: 3rem;
         font-family: "Permanent Marker";
@@ -132,6 +128,10 @@
 
     .centered{
         margin: auto;
+    }
+
+    .centeredText{
+        text-align: center;
     }
     
     .searchbox{

@@ -9,11 +9,11 @@
             >
                 <template #header>
                     <!-- If there is a flag emoji available -->
-                    <h5 class="mb-0" v-if="country.flag">
+                    <h5 class="mb-0 centeredText" v-if="country.flag">
                         <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common}}">{{country.flag + " " + country.name.common }}</router-link>
                     </h5>
                     <!-- If there is not a flag emoji available -->
-                    <h5 class="mb-0" v-else>
+                    <h5 class="mb-0 centeredText" v-else>
                         <router-link class="c_link" :to="{name: 'single_country', params: {country: country.name.common}}">&#127937; {{country.name.common }}</router-link>
                     </h5>
                 </template>
@@ -64,5 +64,8 @@
 <style>
     .c_link{
         text-decoration: none;
+    }
+    .centeredText{
+        text-align: center;
     }
 </style>
